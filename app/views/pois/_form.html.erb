@@ -11,38 +11,38 @@
   <% end %>
 
   <div class="mb-3">
-    <%= form.label :name, "Nome do Ponto Turístico", class: "form-label fw-bold" %>
-    <%= form.text_field :name, class: "form-control", placeholder: "Ex: Praia de Alter do Chão" %>
+    <%= form.label :name, class: "form-label fw-bold" %>
+    <%= form.text_field :name, class: "form-control", placeholder: t("pois.form.placeholders.name") %>
   </div>
 
   <div class="mb-3">
-    <%= form.label :category, "Categoria", class: "form-label fw-bold" %>
-    <%= form.text_field :category, class: "form-control", placeholder: "Ex: Praia, Cultura, Restaurante" %>
+    <%= form.label :category, class: "form-label fw-bold" %>
+    <%= form.text_field :category, class: "form-control", placeholder: t("pois.form.placeholders.category") %>
   </div>
 
   <div class="mb-3">
-    <%= form.label :address, "Endereço", class: "form-label fw-bold" %>
-    <%= form.text_field :address, class: "form-control", placeholder: "Ex: Alter do Chão, Santarém - PA" %>
+    <%= form.label :address, class: "form-label fw-bold" %>
+    <%= form.text_field :address, class: "form-control", placeholder: t("pois.form.placeholders.address") %>
   </div>
 
   <div class="row">
     <div class="col-md-6 mb-3">
-      <%= form.label :latitude, "Latitude", class: "form-label fw-bold" %>
-      <%= form.number_field :latitude, step: :any, class: "form-control", placeholder: "-2.504100" %>
+      <%= form.label :latitude, class: "form-label fw-bold" %>
+      <%= form.number_field :latitude, step: :any, class: "form-control", placeholder: t("pois.form.placeholders.latitude") %>
     </div>
     <div class="col-md-6 mb-3">
-      <%= form.label :longitude, "Longitude", class: "form-label fw-bold" %>
-      <%= form.number_field :longitude, step: :any, class: "form-control", placeholder: "-54.954700" %>
+      <%= form.label :longitude, class: "form-label fw-bold" %>
+      <%= form.number_field :longitude, step: :any, class: "form-control", placeholder: t("pois.form.placeholders.longitude") %>
     </div>
   </div>
 
   <div class="mb-3">
-    <%= form.label :description, "Descrição", class: "form-label fw-bold" %>
-    <%= form.text_area :description, rows: 4, class: "form-control", placeholder: "Descreva o que torna este local especial..." %>
+    <%= form.label :description, class: "form-label fw-bold" %>
+    <%= form.text_area :description, rows: 4, class: "form-control", placeholder: t("pois.form.placeholders.description") %>
   </div>
 
   <div class="d-flex justify-content-end gap-2">
-    <%= link_to "Cancelar", pois_path, class: "btn btn-outline-secondary" %>
-    <%= form.submit "Salvar Ponto de Interesse", class: "btn btn-primary" %>
+    <%= link_to t("pois.form.cancel"), pois_path, class: "btn btn-outline-secondary" %>
+    <%= form.submit class: "btn btn-primary" %>
   </div>
 <% end %>

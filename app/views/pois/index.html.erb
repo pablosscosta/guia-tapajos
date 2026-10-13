@@ -1,7 +1,7 @@
 <div class="container my-4">
   <div class="d-flex justify-content-between align-items-center mb-4">
-    <h1>Pontos de Interesse</h1>
-    <%= link_to "Novo Ponto", new_poi_path, class: "btn btn-primary" %>
+    <h1><%= t("pois.index.title") %></h1>
+    <%= link_to t("pois.index.new_button"), new_poi_path, class: "btn btn-primary" %>
   </div>
 
   <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
@@ -17,10 +17,10 @@
             <p class="card-text flex-grow-1"><%= truncate(poi.description, length: 100) %></p>
             
             <div class="d-flex justify-content-between align-items-center mt-3 pt-3 border-top">
-              <%= link_to "Ver", poi_path(poi), class: "btn btn-sm btn-outline-secondary" %>
+              <%= link_to t("pois.index.actions.show"), poi_path(poi), class: "btn btn-sm btn-outline-secondary" %>
               <div>
-                <%= link_to "Editar", edit_poi_path(poi), class: "btn btn-sm btn-outline-primary me-1" %>
-                <%= button_to "Excluir", poi_path(poi), method: :delete, data: { turbo_confirm: "Tem certeza?" }, class: "btn btn-sm btn-outline-danger" %>
+                <%= link_to t("pois.index.actions.edit"), edit_poi_path(poi), class: "btn btn-sm btn-outline-primary me-1" %>
+                <%= button_to t("pois.index.actions.destroy"), poi_path(poi), method: :delete, data: { turbo_confirm: t("pois.index.actions.confirm_destroy") }, class: "btn btn-sm btn-outline-danger" %>
               </div>
             </div>
           </div>

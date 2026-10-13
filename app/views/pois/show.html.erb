@@ -12,29 +12,29 @@
       <hr>
 
       <div class="mb-4">
-        <h5 class="fw-bold">Sobre o local</h5>
+        <h5 class="fw-bold"><%= t("pois.show.about") %></h5>
         <p class="card-text"><%= @poi.description %></p>
       </div>
 
       <div class="mb-4 p-3 bg-light rounded">
-        <h6 class="fw-bold text-secondary mb-2">Coordenadas Geográficas</h6>
+        <h6 class="fw-bold text-secondary mb-2"><%= t("pois.show.coordinates") %></h6>
         <div class="row text-center">
           <div class="col-6 border-end">
-            <small class="d-block text-muted">Latitude</small>
+            <small class="d-block text-muted"><%= Poi.human_attribute_name(:latitude) %></small>
             <strong><%= @poi.latitude %></strong>
           </div>
           <div class="col-6">
-            <small class="d-block text-muted">Longitude</small>
+            <small class="d-block text-muted"><%= Poi.human_attribute_name(:longitude) %></small>
             <strong><%= @poi.longitude %></strong>
           </div>
         </div>
       </div>
 
       <div class="d-flex justify-content-between align-items-center pt-3 border-top">
-        <%= link_to "Voltar para a lista", pois_path, class: "btn btn-outline-secondary" %>
+        <%= link_to t("pois.show.back"), pois_path, class: "btn btn-outline-secondary" %>
         <div>
-          <%= link_to "Editar", edit_poi_path(@poi), class: "btn btn-primary me-2" %>
-          <%= button_to "Excluir", poi_path(@poi), method: :delete, data: { turbo_confirm: "Tem certeza?" }, class: "btn btn-outline-danger d-inline" %>
+          <%= link_to t("pois.index.actions.edit"), edit_poi_path(@poi), class: "btn btn-primary me-2" %>
+          <%= button_to t("pois.index.actions.destroy"), poi_path(@poi), method: :delete, data: { turbo_confirm: t("pois.index.actions.confirm_destroy") }, class: "btn btn-outline-danger d-inline" %>
         </div>
       </div>
     </div>

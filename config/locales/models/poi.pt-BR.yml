@@ -1,0 +1,41 @@
+pt-BR:
+  activerecord:
+    models:
+      poi:
+        one: "Ponto de Interesse"
+        other: "Pontos de Interesse"
+    attributes:
+      poi:
+        name: "Nome do Ponto Turístico"
+        category: "Categoria"
+        address: "Endereço"
+        latitude: "Latitude"
+        longitude: "Longitude"
+        description: "Descrição"
+  pois:
+    index:
+      title: "Pontos de Interesse"
+      new_button: "Novo Ponto"
+      actions:
+        show: "Ver"
+        edit: "Editar"
+        destroy: "Excluir"
+        confirm_destroy: "Tem certeza?"
+    show:
+      about: "Sobre o local"
+      coordinates: "Coordenadas Geográficas"
+      back: "Voltar para a lista"
+    form:
+      new_title: "Novo Ponto de Interesse"
+      edit_title: "Editar Ponto de Interesse"
+      placeholders:
+        name: "Ex: Praia de Alter do Chão"
+        category: "Ex: Praia, Cultura, Restaurante"
+        address: "Ex: Alter do Chão, Santarém - PA"
+        latitude: "-2.504100"
+        longitude: "-54.954700"
+        description: "Descreva o que torna este local especial..."
+      submit:
+        create: "Salvar Ponto de Interesse"
+        update: "Atualizar Ponto de Interesse"
+      cancel: "Cancelar"
