@@ -11,6 +11,7 @@ pt-BR:
         address: "Endereço"
         latitude: "Latitude"
         longitude: "Longitude"
+        cover_image: "Foto de Capa"
         description: "Descrição"
   pois:
     index:

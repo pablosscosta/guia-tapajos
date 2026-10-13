@@ -63,8 +63,7 @@ class PoisController < ApplicationController
       @poi = Poi.find(params[:id])
     end
 
-    # Only allow a list of trusted parameters through.
     def poi_params
-      params.require(:poi).permit(:name, :description, :category, :address, :latitude, :longitude)
+      params.require(:poi).permit(:name, :description, :category, :address, :latitude, :longitude, :cover_image)
     end
 end
