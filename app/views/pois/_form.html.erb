@@ -1,9 +1,8 @@
-<%= form_with(model: poi) do |form| %>
+<%= form_with(model: poi, class: "needs-validation") do |form| %>
   <% if poi.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(poi.errors.count, "error") %> prohibited this poi from being saved:</h2>
-
-      <ul>
+    <div class="alert alert-danger">
+      <h5 class="alert-heading"><%= pluralize(poi.errors.count, "erro") %> impediram este POI de ser salvo:</h5>
+      <ul class="mb-0">
         <% poi.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
@@ -11,37 +10,39 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :name, style: "display: block" %>
-    <%= form.text_field :name %>
+  <div class="mb-3">
+    <%= form.label :name, "Nome do Ponto Turístico", class: "form-label fw-bold" %>
+    <%= form.text_field :name, class: "form-control", placeholder: "Ex: Praia de Alter do Chão" %>
   </div>
 
-  <div>
-    <%= form.label :description, style: "display: block" %>
-    <%= form.text_area :description %>
+  <div class="mb-3">
+    <%= form.label :category, "Categoria", class: "form-label fw-bold" %>
+    <%= form.text_field :category, class: "form-control", placeholder: "Ex: Praia, Cultura, Restaurante" %>
   </div>
 
-  <div>
-    <%= form.label :category, style: "display: block" %>
-    <%= form.text_field :category %>
+  <div class="mb-3">
+    <%= form.label :address, "Endereço", class: "form-label fw-bold" %>
+    <%= form.text_field :address, class: "form-control", placeholder: "Ex: Alter do Chão, Santarém - PA" %>
   </div>
 
-  <div>
-    <%= form.label :address, style: "display: block" %>
-    <%= form.text_field :address %>
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <%= form.label :latitude, "Latitude", class: "form-label fw-bold" %>
+      <%= form.number_field :latitude, step: :any, class: "form-control", placeholder: "-2.504100" %>
+    </div>
+    <div class="col-md-6 mb-3">
+      <%= form.label :longitude, "Longitude", class: "form-label fw-bold" %>
+      <%= form.number_field :longitude, step: :any, class: "form-control", placeholder: "-54.954700" %>
+    </div>
   </div>
 
-  <div>
-    <%= form.label :latitude, style: "display: block" %>
-    <%= form.text_field :latitude %>
+  <div class="mb-3">
+    <%= form.label :description, "Descrição", class: "form-label fw-bold" %>
+    <%= form.text_area :description, rows: 4, class: "form-control", placeholder: "Descreva o que torna este local especial..." %>
   </div>
 
-  <div>
-    <%= form.label :longitude, style: "display: block" %>
-    <%= form.text_field :longitude %>
-  </div>
-
-  <div>
-    <%= form.submit %>
+  <div class="d-flex justify-content-end gap-2">
+    <%= link_to "Cancelar", pois_path, class: "btn btn-outline-secondary" %>
+    <%= form.submit "Salvar Ponto de Interesse", class: "btn btn-primary" %>
   </div>
 <% end %>

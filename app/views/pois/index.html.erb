@@ -1,14 +1,31 @@
-<p style="color: green"><%= notice %></p>
+<div class="container my-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Pontos de Interesse</h1>
+    <%= link_to "Novo Ponto", new_poi_path, class: "btn btn-primary" %>
+  </div>
 
-<h1>Pois</h1>
-
-<div id="pois">
-  <% @pois.each do |poi| %>
-    <%= render poi %>
-    <p>
-      <%= link_to "Show this poi", poi %>
-    </p>
-  <% end %>
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    <% @pois.each do |poi| %>
+      <div class="col">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body d-flex flex-column">
+            <div class="mb-2">
+              <span class="badge bg-secondary"><%= poi.category %></span>
+            </div>
+            <h5 class="card-title"><%= poi.name %></h5>
+            <p class="card-text text-muted small mb-2"><%= poi.address %></p>
+            <p class="card-text flex-grow-1"><%= truncate(poi.description, length: 100) %></p>
+            
+            <div class="d-flex justify-content-between align-items-center mt-3 pt-3 border-top">
+              <%= link_to "Ver", poi_path(poi), class: "btn btn-sm btn-outline-secondary" %>
+              <div>
+                <%= link_to "Editar", edit_poi_path(poi), class: "btn btn-sm btn-outline-primary me-1" %>
+                <%= button_to "Excluir", poi_path(poi), method: :delete, data: { turbo_confirm: "Tem certeza?" }, class: "btn btn-sm btn-outline-danger" %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
 </div>
-
-<%= link_to "New poi", new_poi_path %>
