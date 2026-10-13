@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Pois</h1>
+
+<div id="pois">
+  <% @pois.each do |poi| %>
+    <%= render poi %>
+    <p>
+      <%= link_to "Show this poi", poi %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New poi", new_poi_path %>

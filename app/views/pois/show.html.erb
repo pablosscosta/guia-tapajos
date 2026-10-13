@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @poi %>
+
+<div>
+  <%= link_to "Edit this poi", edit_poi_path(@poi) %> |
+  <%= link_to "Back to pois", pois_path %>
+
+  <%= button_to "Destroy this poi", @poi, method: :delete %>
+</div>
