@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>GuiaTapajos</title>
+    <title>Guia Tapajós</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -11,6 +11,27 @@
   </head>
 
   <body>
-    <%= yield %>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+      <div class="container">
+        <%= link_to "Guia Tapajós", pois_path, class: "navbar-brand fw-bold" %>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav me-auto">
+            <li class="nav-item">
+              <%= link_to t("pois.index.title"), pois_path, class: "nav-link active" %>
+            </li>
+          </ul>
+          <div>
+            <%= link_to t("pois.index.new_button"), new_poi_path, class: "btn btn-outline-light btn-sm" %>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <main class="container">
+      <%= yield %>
+    </main>
   </body>
 </html>

@@ -1,40 +1,46 @@
-<div class="container my-4" style="max-width: 800px;">
-  <div class="card shadow-sm">
-    <div class="card-body p-4">
-      <div class="d-flex justify-content-between align-items-start mb-3">
-        <div>
-          <span class="badge bg-secondary mb-2"><%= @poi.category %></span>
-          <h1 class="card-title h2 mb-1"><%= @poi.name %></h1>
-          <p class="text-muted"><%= @poi.address %></p>
-        </div>
-      </div>
+<div class="row justify-content-center">
+  <div class="col-md-8">
+    <div class="card shadow-sm border">
+      <% if @poi.cover_image.attached? %>
+        <%= image_tag @poi.cover_image, class: "card-img-top", style: "max-height: 350px; object-fit: cover;" %>
+      <% end %>
 
-      <hr>
-
-      <div class="mb-4">
-        <h5 class="fw-bold"><%= t("pois.show.about") %></h5>
-        <p class="card-text"><%= @poi.description %></p>
-      </div>
-
-      <div class="mb-4 p-3 bg-light rounded">
-        <h6 class="fw-bold text-secondary mb-2"><%= t("pois.show.coordinates") %></h6>
-        <div class="row text-center">
-          <div class="col-6 border-end">
-            <small class="d-block text-muted"><%= Poi.human_attribute_name(:latitude) %></small>
-            <strong><%= @poi.latitude %></strong>
-          </div>
-          <div class="col-6">
-            <small class="d-block text-muted"><%= Poi.human_attribute_name(:longitude) %></small>
-            <strong><%= @poi.longitude %></strong>
+      <div class="card-body p-4">
+        <div class="d-flex justify-content-between align-items-start mb-2">
+          <div>
+            <span class="badge bg-secondary mb-2"><%= @poi.category %></span>
+            <h1 class="h3 mb-1"><%= @poi.name %></h1>
+            <p class="text-muted small"><%= @poi.address %></p>
           </div>
         </div>
-      </div>
 
-      <div class="d-flex justify-content-between align-items-center pt-3 border-top">
-        <%= link_to t("pois.show.back"), pois_path, class: "btn btn-outline-secondary" %>
-        <div>
-          <%= link_to t("pois.index.actions.edit"), edit_poi_path(@poi), class: "btn btn-primary me-2" %>
-          <%= button_to t("pois.index.actions.destroy"), poi_path(@poi), method: :delete, data: { turbo_confirm: t("pois.index.actions.confirm_destroy") }, class: "btn btn-outline-danger d-inline" %>
+        <hr>
+
+        <div class="mb-4">
+          <h2 class="h6 fw-bold text-dark"><%= t("pois.show.about") %></h2>
+          <p class="card-text text-secondary"><%= @poi.description %></p>
+        </div>
+
+        <div class="mb-4 p-3 bg-light border rounded">
+          <h2 class="h6 fw-bold text-dark mb-2"><%= t("pois.show.coordinates") %></h2>
+          <div class="row text-center">
+            <div class="col-6 border-end">
+              <small class="d-block text-muted"><%= Poi.human_attribute_name(:latitude) %></small>
+              <code><%= @poi.latitude %></code>
+            </div>
+            <div class="col-6">
+              <small class="d-block text-muted"><%= Poi.human_attribute_name(:longitude) %></small>
+              <code><%= @poi.longitude %></code>
+            </div>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center pt-3 border-top">
+          <%= link_to t("pois.show.back"), pois_path, class: "btn btn-outline-secondary" %>
+          <div class="btn-group">
+            <%= link_to t("pois.index.actions.edit"), edit_poi_path(@poi), class: "btn btn-primary" %>
+            <%= button_to t("pois.index.actions.destroy"), poi_path(@poi), method: :delete, data: { turbo_confirm: t("pois.index.actions.confirm_destroy") }, class: "btn btn-outline-danger" %>
+          </div>
         </div>
       </div>
     </div>
