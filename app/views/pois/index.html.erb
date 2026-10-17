@@ -4,7 +4,18 @@
 </div>
 
 <!-- Container do Mapa -->
-<div id="map" class="mb-4 rounded shadow-sm" style="height: 400px; width: 100%;"></div>
+<div id="map" 
+     class="mb-4 rounded shadow-sm" 
+     style="height: 400px; width: 100%;"
+     data-pois="<%= @pois.map { |poi| {
+       name: poi.name,
+       latitude: poi.latitude,
+       longitude: poi.longitude,
+       category: poi.category,
+       address: poi.address,
+       url: poi_path(poi)
+     } }.to_json %>">
+</div>
 
 <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
   <% @pois.each do |poi| %>
