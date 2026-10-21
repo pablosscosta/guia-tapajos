@@ -4,6 +4,16 @@ class PoisController < ApplicationController
   # GET /pois or /pois.json
   def index
     @pois = Poi.all
+
+    if params[:query].present?
+      # Filtra pelo nome ou endereço contendo o termo buscado (case-insensitive)
+      @pois = @pois.where("name ILIKE ? OR address ILIKE ?", "%#{params[:query]}%", "%#{params[:query]}%")
+    end
+
+    if params[:category].present?
+      # Filtra pela categoria exata selecionada
+      @pois = @pois.where(category: params[:category])
+    end
   end
 
   # GET /pois/1 or /pois/1.json
