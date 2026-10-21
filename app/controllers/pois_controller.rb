@@ -4,6 +4,20 @@ class PoisController < ApplicationController
   # GET /pois or /pois.json
   def index
     @pois = Poi.all
+
+    if params[:query].present?
+      @pois = @pois.where("name LIKE ? OR address LIKE ?", "%#{params[:query]}%", "%#{params[:query]}%")
+    end
+
+    if params[:category].present?
+      # Filtra pela categoria exata selecionada
+      @pois = @pois.where(category: params[:category])
+    end
+
+    if params[:latitude].present? && params[:longitude].present?
+      radius = params[:radius].present? ? params[:radius].to_f : 20
+      @pois = @pois.near_location(params[:latitude], params[:longitude], radius)
+    end
   end
 
   # GET /pois/1 or /pois/1.json

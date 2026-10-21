@@ -1,41 +1,97 @@
-<div class="d-flex justify-content-between align-items-center mb-4">
-  <h1 class="h3 text-dark mb-0"><%= t("pois.index.title") %></h1>
-  <%= link_to t("pois.index.new_button"), new_poi_path, class: "btn btn-primary" %>
-</div>
+<div class="container my-4">
+  <h1 class="mb-4">Pontos de Interesse (POIs)</h1>
 
+  <div class="card mb-4 shadow-sm">
+    <div class="card-body">
+      <%= form_with url: pois_path, method: :get, local: true, class: "row g-3 align-items-end", id: "filter-form" do |f| %>
+        
+        <div class="col-md-3">
+          <%= f.label :query, "Buscar", class: "form-label fw-bold" %>
+          <%= f.text_field :query, value: params[:query], placeholder: "Nome ou endereço...", class: "form-control" %>
+        </div>
 
-<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-  <% @pois.each do |poi| %>
-    <div class="col">
-      <div class="card h-100 shadow-sm border">
-        <% if poi.cover_image.attached? %>
-          <%= image_tag poi.cover_image, class: "card-img-top", style: "height: 180px; object-fit: cover;" %>
-        <% else %>
-          <div class="bg-light d-flex align-items-center justify-content-center text-muted border-bottom" style="height: 180px;">
-            <small class="text-secondary">Sem imagem</small>
-          </div>
-        <% end %>
+        <div class="col-md-3">
+          <%= f.label :category, "Categoria", class: "form-label fw-bold" %>
+          <%= f.select :category, options_for_select([["Todas", ""]] + Poi.pluck(:category).compact.uniq, params[:category]), {}, class: "form-select" %>
+        </div>
 
-        <div class="card-body d-flex flex-column">
-          <div class="mb-2">
-            <span class="badge bg-secondary"><%= poi.category %></span>
-          </div>
+        <div class="col-md-2">
+          <%= f.label :radius, "Raio (km)", class: "form-label fw-bold" %>
+          <%= f.number_field :radius, value: params[:radius], placeholder: "20", class: "form-control" %>
+        </div>
 
-          <h5 class="card-title h6 fw-bold mb-1"><%= poi.name %></h5>
-          <p class="card-text text-muted small mb-2"><%= poi.address %></p>
-          <p class="card-text text-secondary small flex-grow-1">
-            <%= truncate(poi.description, length: 100) %>
-          </p>
-          
-          <div class="d-flex justify-content-between align-items-center mt-3 pt-2 border-top">
-            <%= link_to t("pois.index.actions.show"), poi_path(poi), class: "btn btn-sm btn-outline-secondary" %>
-            <div class="btn-group btn-group-sm">
-              <%= link_to t("pois.index.actions.edit"), edit_poi_path(poi), class: "btn btn-outline-primary" %>
-              <%= button_to t("pois.index.actions.destroy"), poi_path(poi), method: :delete, data: { turbo_confirm: t("pois.index.actions.confirm_destroy") }, class: "btn btn-outline-danger" %>
-            </div>
+        <%= f.hidden_field :latitude, value: params[:latitude], id: "latitude_field" %>
+        <%= f.hidden_field :longitude, value: params[:longitude], id: "longitude_field" %>
+
+        <div class="col-md-4 d-flex gap-2">
+          <%= f.submit "Filtrar", class: "btn btn-primary flex-grow-1" %>
+          <%= link_to "Limpar", pois_path, class: "btn btn-outline-secondary" %>
+        </div>
+
+      <% end %>
+    </div>
+  </div>
+
+  <% if params[:latitude].present? && params[:longitude].present? %>
+    <div class="alert alert-info py-2">
+      <small>📍 Filtrando por proximidade (Raio: <%= params[:radius].presence || 20 %> km)</small>
+    </div>
+  <% end %>
+
+<div class="row">
+    <% @pois.each do |poi| %>
+      <div class="col-md-4 mb-3">
+        <div class="card h-100 shadow-sm">
+          <% if poi.cover_image.attached? %>
+            <%= image_tag poi.cover_image, class: "card-img-top", style: "height: 200px; object-fit: cover;" %>
+          <% end %>
+          <div class="card-body">
+            <h5 class="card-title"><%= poi.name %></h5>
+            <h6 class="card-subtitle mb-2 text-muted"><%= poi.category %></h6>
+            <p class="card-text"><%= poi.address %></p>
           </div>
         </div>
       </div>
-    </div>
-  <% end %>
+    <% end %>
+  </div>
 </div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const latField = document.getElementById("latitude_field");
+    const lngField = document.getElementById("longitude_field");
+    const form = document.querySelector("#filter-form");
+
+    // Tenta pegar a geolocalização ao carregar a página
+    if (!latField.value && navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        function(position) {
+          latField.value = position.coords.latitude;
+          lngField.value = position.coords.longitude;
+        },
+        function(error) {
+          console.log("Geolocalização não permitida: ", error.message);
+        }
+      );
+    }
+
+    // Se o usuário preencheu o raio mas a latitude ainda está vazia, avisa ou tenta pegar na hora
+    form.addEventListener("submit", function(event) {
+      const radiusField = document.querySelector("input[name='radius']");
+      if (radiusField.value && !latField.value && navigator.geolocation) {
+        event.preventDefault();
+        navigator.geolocation.getCurrentPosition(
+          function(position) {
+            latField.value = position.coords.latitude;
+            lngField.value = position.coords.longitude;
+            form.submit(); // Envia após preencher
+          },
+          function(error) {
+            alert("Para usar o filtro de raio, é preciso permitir o acesso à localização.");
+          },
+          { timeout: 5000 }
+        );
+      }
+    });
+  });
+</script>
