@@ -4,6 +4,36 @@
 </div>
 
 
+<!-- Formulário de Busca e Filtros -->
+<div class="card mb-4 shadow-sm">
+  <div class="card-body">
+    <%= form_with url: pois_path, method: :get, local: true, class: "row g-3 align-items-end" do |f| %>
+      
+      <!-- Busca por Texto -->
+      <div class="col-md-5">
+        <%= f.label :query, "Buscar por nome ou endereço", class: "form-label fw-bold" %>
+        <%= f.text_field :query, value: params[:query], placeholder: "Ex: Alter do Chão, orla...", class: "form-control" %>
+      </div>
+
+      <!-- Filtro por Categoria -->
+      <div class="col-md-4">
+        <%= f.label :category, "Categoria", class: "form-label fw-bold" %>
+        <%= f.select :category, 
+                     options_for_select([["Todas as categorias", ""]] + Poi.pluck(:category).compact.uniq, params[:category]), 
+                     {}, 
+                     class: "form-select" %>
+      </div>
+
+      <!-- Botões de Ação -->
+      <div class="col-md-3 d-flex gap-2">
+        <%= f.submit "Filtrar", class: "btn btn-primary flex-grow-1" %>
+        <%= link_to "Limpar", pois_path, class: "btn btn-outline-secondary" if params[:query].present? || params[:category].present? %>
+      </div>
+
+    <% end %>
+  </div>
+</div>
+
 <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
   <% @pois.each do |poi| %>
     <div class="col">
