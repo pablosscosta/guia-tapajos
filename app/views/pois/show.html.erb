@@ -35,6 +35,15 @@
           </div>
         </div>
 
+        <!-- Container de mapa  -->
+        <div id="map" 
+             class="mb-4 rounded shadow-sm" 
+             style="height: 350px; width: 100%;"
+             data-latitude="<%= @poi.latitude %>"
+             data-longitude="<%= @poi.longitude %>"
+             data-name="<%= @poi.name %>">
+        </div>
+
         <div class="d-flex justify-content-between align-items-center pt-3 border-top">
           <%= link_to t("pois.show.back"), pois_path, class: "btn btn-outline-secondary" %>
           <div class="btn-group">
