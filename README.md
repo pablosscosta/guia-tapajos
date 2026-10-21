@@ -16,8 +16,8 @@ Aplicação web desenvolvida em Ruby on Rails para gerenciamento e exibição de
 * Interface responsiva estruturada com Bootstrap 5.
 * Internacionalização (I18n) configurada para português do brasil (`pt-BR`) com arquivos separados por domínio.
 * Mapa interativo (via Leaflet / OpenStreetMap) exibido na página de detalhes de cada ponto turístico, sinalizando a localização exata através de coordenadas geográficas.
+* Busca por nome/endereço, filtro por categoria e cálculo de proximidade por raio (km) com geolocalização do navegador.
 
 ## Próximas Features (Roadmap)
-* Sistema de busca e filtros avançados por categoria e proximidade.
 * Painel de autenticação e perfis de usuário (Administradores vs. Visitantes).
 * Avaliações, comentários e notas para os pontos turísticos.
