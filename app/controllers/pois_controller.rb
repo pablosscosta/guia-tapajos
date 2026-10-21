@@ -6,8 +6,7 @@ class PoisController < ApplicationController
     @pois = Poi.all
 
     if params[:query].present?
-      # Filtra pelo nome ou endereço contendo o termo buscado (case-insensitive)
-      @pois = @pois.where("name ILIKE ? OR address ILIKE ?", "%#{params[:query]}%", "%#{params[:query]}%")
+      @pois = @pois.where("name LIKE ? OR address LIKE ?", "%#{params[:query]}%", "%#{params[:query]}%")
     end
 
     if params[:category].present?
