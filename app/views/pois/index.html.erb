@@ -3,7 +3,7 @@
 
   <div class="card mb-4 shadow-sm">
     <div class="card-body">
-      <%= form_with url: pois_path, method: :get, local: true, class: "row g-3 align-items-end", id: "filter-form" do |f| %>
+      <%= form_with url: pois_path, method: :get, local: true, class: "row g-3 align-items-end", id: "filter-form", data: { controller: "geolocation" } do |f| %>
         
         <div class="col-md-3">
           <%= f.label :query, "Buscar", class: "form-label fw-bold" %>
@@ -20,8 +20,8 @@
           <%= f.number_field :radius, value: params[:radius], placeholder: "20", class: "form-control" %>
         </div>
 
-        <%= f.hidden_field :latitude, value: params[:latitude], id: "latitude_field" %>
-        <%= f.hidden_field :longitude, value: params[:longitude], id: "longitude_field" %>
+        <%= f.hidden_field :latitude, value: params[:latitude], id: "latitude_field", data: { geolocation_target: "latitude" } %>
+        <%= f.hidden_field :longitude, value: params[:longitude], id: "longitude_field", data: { geolocation_target: "longitude" } %>
 
         <div class="col-md-4 d-flex gap-2">
           <%= f.submit "Filtrar", class: "btn btn-primary flex-grow-1" %>
@@ -34,7 +34,7 @@
 
   <% if params[:latitude].present? && params[:longitude].present? %>
     <div class="alert alert-info py-2">
-      <small>📍 Filtrando por proximidade (Raio: <%= params[:radius].presence || 20 %> km)</small>
+      <small>Filtrando por proximidade (Raio: <%= params[:radius].presence || 20 %> km)</small>
     </div>
   <% end %>
 
@@ -55,43 +55,3 @@
     <% end %>
   </div>
 </div>
-
-<script>
-  document.addEventListener("DOMContentLoaded", function() {
-    const latField = document.getElementById("latitude_field");
-    const lngField = document.getElementById("longitude_field");
-    const form = document.querySelector("#filter-form");
-
-    // Tenta pegar a geolocalização ao carregar a página
-    if (!latField.value && navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        function(position) {
-          latField.value = position.coords.latitude;
-          lngField.value = position.coords.longitude;
-        },
-        function(error) {
-          console.log("Geolocalização não permitida: ", error.message);
-        }
-      );
-    }
-
-    // Se o usuário preencheu o raio mas a latitude ainda está vazia, avisa ou tenta pegar na hora
-    form.addEventListener("submit", function(event) {
-      const radiusField = document.querySelector("input[name='radius']");
-      if (radiusField.value && !latField.value && navigator.geolocation) {
-        event.preventDefault();
-        navigator.geolocation.getCurrentPosition(
-          function(position) {
-            latField.value = position.coords.latitude;
-            lngField.value = position.coords.longitude;
-            form.submit(); // Envia após preencher
-          },
-          function(error) {
-            alert("Para usar o filtro de raio, é preciso permitir o acesso à localização.");
-          },
-          { timeout: 5000 }
-        );
-      }
-    });
-  });
-</script>
