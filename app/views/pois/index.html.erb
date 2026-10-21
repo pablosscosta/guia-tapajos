@@ -24,6 +24,14 @@
                      class: "form-select" %>
       </div>
 
+      <div class="col-md-2">
+        <%= f.label :radius, "Raio (km)", class: "form-label fw-bold" %>
+        <%= f.number_field :radius, value: params[:radius], placeholder: "20", class: "form-control" %>
+      </div>
+
+      <%= f.hidden_field :latitude, value: params[:latitude], id: "latitude_field" %>
+      <%= f.hidden_field :longitude, value: params[:longitude], id: "longitude_field" %>
+
       <!-- Botões de Ação -->
       <div class="col-md-3 d-flex gap-2">
         <%= f.submit "Filtrar", class: "btn btn-primary flex-grow-1" %>
