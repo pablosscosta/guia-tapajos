@@ -77,6 +77,12 @@ class PoisController < ApplicationController
       @poi = Poi.find(params[:id])
     end
 
+    def require_login
+      unless logged_in?
+        redirect_to login_path, alert: "Você precisa fazer login para continuar."
+      end
+    end
+
     def poi_params
       params.require(:poi).permit(:name, :description, :category, :address, :latitude, :longitude, :cover_image)
     end

@@ -27,8 +27,17 @@
               <%= link_to t("pois.index.title"), pois_path, class: "nav-link active" %>
             </li>
           </ul>
-          <div>
-            <%= link_to t("pois.index.new_button"), new_poi_path, class: "btn btn-outline-light btn-sm" %>
+
+
+          <div class="d-flex align-items-center gap-2">
+            <% if logged_in? %>
+              <%= link_to t("pois.index.new_button"), new_poi_path, class: "btn btn-outline-light btn-sm" %>
+              <span class="text-light ms-2 small">Olá, <%= current_user.name %></span>
+              <%= button_to "Sair", logout_path, method: :delete, class: "btn btn-outline-danger btn-sm", data: { turbo: false } %>
+            <% else %>
+              <%= link_to "Entrar", login_path, class: "btn btn-outline-light btn-sm" %>
+              <%= link_to "Cadastrar", new_user_path, class: "btn btn-light btn-sm" %>
+            <% end %>
           </div>
         </div>
       </div>
