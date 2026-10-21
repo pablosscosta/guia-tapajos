@@ -3,7 +3,7 @@ class PoisController < ApplicationController
 
   # GET /pois or /pois.json
   def index
-    @pois = Poi.all
+    @pois = Poi.approved
 
     if params[:query].present?
       @pois = @pois.where("name LIKE ? OR address LIKE ?", "%#{params[:query]}%", "%#{params[:query]}%")
