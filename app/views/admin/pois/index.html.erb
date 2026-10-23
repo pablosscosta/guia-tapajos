@@ -1,0 +1,9 @@
+<h1>Painel Administrativo - POIs</h1>
+
+<%= link_to "Novo POI", new_admin_poi_path, class: "btn" %>
+
+<ul>
+  <% @pois.each do |poi| %>
+    <li><%= poi.name %></li>
+  <% end %>
+</ul>

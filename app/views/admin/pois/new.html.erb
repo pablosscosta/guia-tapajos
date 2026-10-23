@@ -1,0 +1,12 @@
+<h1>Novo POI</h1>
+
+<%= form_with model: [:admin, @poi] do |f| %>
+  <div>
+    <%= f.label :name, "Nome" %><br>
+    <%= f.text_field :name %>
+  </div>
+
+  <div>
+    <%= f.submit "Salvar POI" %>
+  </div>
+<% end %>

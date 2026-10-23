@@ -31,7 +31,7 @@
 
           <div class="d-flex align-items-center gap-2">
             <% if logged_in? %>
-              <%= link_to t("pois.index.new_button"), new_poi_path, class: "btn btn-outline-light btn-sm" %>
+              <%= link_to t("pois.index.new_button"), new_admin_poi_path, class: "btn btn-outline-light btn-sm" %>
               <span class="text-light ms-2 small">Olá, <%= current_user.name %></span>
               <%= button_to "Sair", logout_path, method: :delete, class: "btn btn-outline-danger btn-sm", data: { turbo: false } %>
             <% else %>

@@ -14,9 +14,14 @@ class ApplicationController < ActionController::Base
   private
 
   def require_login
-    raise "O FILTRO FOI CHAMADO!"
     unless logged_in?
       redirect_to login_path, alert: "Você precisa fazer login para continuar."
+    end
+  end
+
+  def require_admin
+    unless current_user&.admin?
+      redirect_to root_path, alert: "Acesso negado. Apenas administradores."
     end
   end
 end

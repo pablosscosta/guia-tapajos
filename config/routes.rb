@@ -1,10 +1,13 @@
 Rails.application.routes.draw do
-  root "pois#index" 
-
-  resources :pois, only: [:index, :show, :new, :create]
+  root "pois#index"
+  resources :pois, only: [:index, :show]
   resources :users, only: [:new, :create]
-  
+
+  resource :session, only: [:new, :create, :destroy]
   get "login", to: "sessions#new"
-  post "login", to: "sessions#create"
-  delete "logout", to: "sessions#destroy"
+  match "logout", to: "sessions#destroy", via: [:get, :delete] # <-- Aqui
+
+  namespace :admin do
+    resources :pois
+  end
 end
