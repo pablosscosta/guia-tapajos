@@ -4,6 +4,13 @@
 
 <ul>
   <% @pois.each do |poi| %>
-    <li><%= poi.name %></li>
+    <li>
+      <strong><%= poi.name %></strong> (<%= poi.status %>)
+      
+      <% if poi.pending? %>
+        <%= button_to "Aprovar", approve_admin_poi_path(poi), method: :patch %>
+        <%= button_to "Rejeitar", reject_admin_poi_path(poi), method: :patch %>
+      <% end %>
+    </li>
   <% end %>
 </ul>

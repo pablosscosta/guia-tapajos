@@ -1,5 +1,6 @@
 class PoisController < ApplicationController
   before_action :set_poi, only: %i[ show edit update destroy ]
+  before_action :require_login, only: %i[ new create edit update destroy ]
 
   # GET /pois or /pois.json
   def index
@@ -35,16 +36,13 @@ class PoisController < ApplicationController
 
   # POST /pois or /pois.json
   def create
-    @poi = Poi.new(poi_params)
+    @poi = current_user.pois.build(poi_params)
+    @poi.status = current_user.admin? ? :approved : :pending
 
-    respond_to do |format|
-      if @poi.save
-        format.html { redirect_to @poi, notice: "Poi was successfully created." }
-        format.json { render :show, status: :created, location: @poi }
-      else
-        format.html { render :new, status: :unprocessable_content }
-        format.json { render json: @poi.errors, status: :unprocessable_content }
-      end
+    if @poi.save
+      redirect_to @poi, notice: "Ponto de interesse criado com sucesso!"
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 

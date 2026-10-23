@@ -4,6 +4,8 @@ require "open-uri"
 puts "Limpando POIs antigos e anexos..."
 Poi.destroy_all
 
+admin_user = User.find_by(email: "admin@email.com")
+
 pois_data = [
   {
     name: "Praia de Alter do Chão",
@@ -44,7 +46,9 @@ pois_data.each do |poi_attrs|
     category: poi_attrs[:category],
     address: poi_attrs[:address],
     latitude: poi_attrs[:latitude],
-    longitude: poi_attrs[:longitude]
+    longitude: poi_attrs[:longitude],
+    user: admin_user,
+    status: :approved
   )
 
   begin

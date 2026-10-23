@@ -8,12 +8,26 @@ class Admin::PoisController < Admin::BaseController
   end
 
   def create
-    @poi = Poi.new(poi_params)
+    @poi = current_user.pois.build(poi_params)
+    @poi.status = :approved
+
     if @poi.save
       redirect_to admin_pois_path, notice: "POI criado com sucesso!"
     else
       render :new, status: :unprocessable_entity
     end
+  end
+
+  def approve
+    @poi = Poi.find(params[:id])
+    @poi.approved!
+    redirect_to admin_pois_path, notice: "POI aprovado com sucesso!"
+  end
+
+  def reject
+    @poi = Poi.find(params[:id])
+    @poi.rejected!
+    redirect_to admin_pois_path, notice: "POI rejeitado com sucesso!"
   end
 
   private
