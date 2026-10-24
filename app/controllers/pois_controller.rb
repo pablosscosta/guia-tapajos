@@ -1,16 +1,17 @@
 class PoisController < ApplicationController
   before_action :set_poi, only: %i[ show edit update destroy ]
+  before_action :require_login, only: %i[ my_pois new create edit update destroy ]
 
-  # GET /pois or /pois.json
+  # Listagem Pública (Home / Mapa)
+  # GET /pois
   def index
-    @pois = Poi.all
+    @pois = Poi.approved
 
     if params[:query].present?
       @pois = @pois.where("name LIKE ? OR address LIKE ?", "%#{params[:query]}%", "%#{params[:query]}%")
     end
 
     if params[:category].present?
-      # Filtra pela categoria exata selecionada
       @pois = @pois.where(category: params[:category])
     end
 
@@ -20,7 +21,13 @@ class PoisController < ApplicationController
     end
   end
 
-  # GET /pois/1 or /pois/1.json
+  # Painel do Parceiro (Meus Pontos)
+  # GET /pois/my_pois
+  def my_pois
+    @pois = current_user.pois.order(created_at: :desc)
+  end
+
+  # GET /pois/1
   def show
   end
 
@@ -33,22 +40,19 @@ class PoisController < ApplicationController
   def edit
   end
 
-  # POST /pois or /pois.json
+  # POST /pois
   def create
-    @poi = Poi.new(poi_params)
+    @poi = current_user.pois.build(poi_params)
+    @poi.status = current_user.admin? ? :approved : :pending
 
-    respond_to do |format|
-      if @poi.save
-        format.html { redirect_to @poi, notice: "Poi was successfully created." }
-        format.json { render :show, status: :created, location: @poi }
-      else
-        format.html { render :new, status: :unprocessable_content }
-        format.json { render json: @poi.errors, status: :unprocessable_content }
-      end
+    if @poi.save
+      redirect_to @poi, notice: "Ponto de interesse criado com sucesso!"
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 
-  # PATCH/PUT /pois/1 or /pois/1.json
+  # PATCH/PUT /pois/1
   def update
     respond_to do |format|
       if @poi.update(poi_params)
@@ -61,7 +65,7 @@ class PoisController < ApplicationController
     end
   end
 
-  # DELETE /pois/1 or /pois/1.json
+  # DELETE /pois/1
   def destroy
     @poi.destroy!
 
@@ -72,12 +76,18 @@ class PoisController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_poi
-      @poi = Poi.find(params[:id])
-    end
 
-    def poi_params
-      params.require(:poi).permit(:name, :description, :category, :address, :latitude, :longitude, :cover_image)
+  def set_poi
+    @poi = Poi.find(params[:id])
+  end
+
+  def require_login
+    unless logged_in?
+      redirect_to login_path, alert: "Você precisa fazer login para continuar."
     end
+  end
+
+  def poi_params
+    params.require(:poi).permit(:name, :description, :category, :address, :latitude, :longitude, :cover_image)
+  end
 end

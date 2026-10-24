@@ -1,0 +1,9 @@
+pt-BR:
+  sessions:
+    new:
+      title: "Acesse sua conta"
+      subtitle: "Ou"
+      signup_link: "crie uma nova conta"
+      email_label: "E-mail"
+      password_label: "Senha"
+      submit_button: "Entrar"

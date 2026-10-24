@@ -1,0 +1,65 @@
+<div class="container my-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3 fw-bold text-dark mb-0"><%= t("admin.pois.index.title", default: "Painel Administrativo - Moderação de POIs") %></h1>
+    <%= link_to t("admin.pois.index.new_button", default: "Novo POI"), new_admin_poi_path, class: "btn btn-primary btn-sm px-3" %>
+  </div>
+
+  <% if @pois.any? %>
+    <div class="card shadow-sm border-0 rounded-3 overflow-hidden">
+      <div class="table-responsive mb-0">
+        <table class="table table-hover align-middle mb-0">
+          <thead class="table-light text-uppercase fs-7 text-muted">
+            <tr>
+              <th class="py-3 px-4"><%= Poi.human_attribute_name(:name) %></th>
+              <th class="py-3 px-4"><%= t("admin.pois.index.table.creator", default: "Criador") %></th>
+              <th class="py-3 px-4"><%= Poi.human_attribute_name(:category) %></th>
+              <th class="py-3 px-4"><%= t("admin.pois.index.table.status", default: "Status") %></th>
+              <th class="py-3 px-4 text-end"><%= t("admin.pois.index.table.actions", default: "Ações de Moderação") %></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @pois.each do |poi| %>
+              <tr>
+                <td class="py-3 px-4 fw-semibold text-dark">
+                  <%= poi.name %>
+                </td>
+                <td class="py-3 px-4 text-muted small">
+                  <%= poi.user&.email || t("admin.pois.index.unknown_user", default: "Desconhecido") %>
+                </td>
+                <td class="py-3 px-4 text-muted">
+                  <%= poi.category %>
+                </td>
+                <td class="py-3 px-4">
+                  <% case poi.status.to_sym %>
+                  <% when :approved %>
+                    <span class="badge bg-success text-white px-2 py-1">Aprovado</span>
+                  <% when :pending %>
+                    <span class="badge bg-warning text-dark px-2 py-1">Pendente</span>
+                  <% when :rejected %>
+                    <span class="badge bg-danger text-white px-2 py-1">Rejeitado</span>
+                  <% end %>
+                </td>
+                <td class="py-3 px-4 text-end">
+                  <div class="d-flex justify-content-end align-items-center gap-2">
+                    <% if poi.pending? %>
+                      <%= button_to t("admin.pois.actions.approve", default: "Aprovar"), approve_admin_poi_path(poi), method: :patch, class: "btn btn-success btn-sm py-1 px-2", form: { class: "d-inline" } %>
+                      <%= button_to t("admin.pois.actions.reject", default: "Rejeitar"), reject_admin_poi_path(poi), method: :patch, class: "btn btn-outline-danger btn-sm py-1 px-2", form: { class: "d-inline" } %>
+                    <% else %>
+                      <span class="text-muted small fst-italic"><%= t("admin.pois.actions.completed", default: "Moderação concluída") %></span>
+                    <% end %>
+                  </div>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  <% else %>
+    <div class="card shadow-sm border-0 rounded-3 text-center py-5">
+      <div class="card-body">
+        <p class="text-muted mb-0"><%= t("admin.pois.index.empty", default: "Nenhum ponto de interesse cadastrado no sistema.") %></p>
+      </div>
+    </div>
+  <% end %>
+</div>

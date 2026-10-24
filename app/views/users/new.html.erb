@@ -1,0 +1,32 @@
+<h2>Criar Conta</h2>
+<%= form_with model: @user, local: true do |f| %>
+  <% if @user.errors.any? %>
+    <div>
+      <ul>
+        <% @user.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= f.label :name, "Nome" %>
+    <%= f.text_field :name %>
+  </div>
+  <div>
+    <%= f.label :email, "E-mail" %>
+    <%= f.email_field :email %>
+  </div>
+  <div>
+    <%= f.label :password, "Senha" %>
+    <%= f.password_field :password %>
+  </div>
+  <div>
+    <%= f.label :password_confirmation, "Confirme a Senha" %>
+    <%= f.password_field :password_confirmation %>
+  </div>
+  <div>
+    <%= f.submit "Cadastrar" %>
+  </div>
+<% end %>

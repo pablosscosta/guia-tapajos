@@ -1,0 +1,9 @@
+en:
+  sessions:
+    new:
+      title: "Sign in to your account"
+      subtitle: "Or"
+      signup_link: "create a new account"
+      email_label: "Email"
+      password_label: "Password"
+      submit_button: "Sign in"
