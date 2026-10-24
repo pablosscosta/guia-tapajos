@@ -1,12 +1,3 @@
-<h1>Novo POI</h1>
-
-<%= form_with model: [:admin, @poi] do |f| %>
-  <div>
-    <%= f.label :name, "Nome" %><br>
-    <%= f.text_field :name %>
-  </div>
-
-  <div>
-    <%= f.submit "Salvar POI" %>
-  </div>
-<% end %>
+<div class="container my-5">
+  <%= render "pois/form", poi: @poi, url_prefix: :admin, title: t("pois.form.new_title", default: "Novo Ponto de Interesse"), cancel_path: admin_pois_path %>
+</div>

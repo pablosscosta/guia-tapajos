@@ -1,53 +1,64 @@
-<%= form_with(model: poi, class: "needs-validation") do |form| %>
-  <% if poi.errors.any? %>
-    <div class="alert alert-danger">
-      <h5 class="alert-heading"><%= pluralize(poi.errors.count, "erro") %> impediram este POI de ser salvo:</h5>
-      <ul class="mb-0">
-        <% poi.errors.each do |error| %>
-          <li><%= error.full_message %></li>
+<div class="row justify-content-center">
+  <div class="col-md-8 col-lg-6">
+    <div class="card shadow-sm border-0 rounded-3">
+      <div class="card-body p-4">
+        <h1 class="h4 fw-bold text-dark mb-4">
+          <%= local_assigns[:title] || t("pois.form.new_title", default: "Ponto de Interesse") %>
+        </h1>
+
+        <%= form_with(model: local_assigns[:url_prefix] ? [local_assigns[:url_prefix], poi] : poi, class: "needs-validation") do |f| %>
+          <% if poi.errors.any? %>
+            <div class="alert alert-danger py-2 small mb-3">
+              <ul class="mb-0 ps-3">
+                <% poi.errors.each do |error| %>
+                  <li><%= error.full_message %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+
+          <div class="mb-3">
+            <%= f.label :name, Poi.human_attribute_name(:name), class: "form-label text-muted small fw-bold" %>
+            <%= f.text_field :name, placeholder: t("pois.form.placeholders.name", default: "Ex: Praia de Alter do Chão"), class: "form-control" %>
+          </div>
+
+          <div class="mb-3">
+            <%= f.label :category, Poi.human_attribute_name(:category), class: "form-label text-muted small fw-bold" %>
+            <%= f.text_field :category, placeholder: t("pois.form.placeholders.category", default: "Ex: Praia, Cultura, Restaurante"), class: "form-control" %>
+          </div>
+
+          <div class="mb-3">
+            <%= f.label :address, Poi.human_attribute_name(:address), class: "form-label text-muted small fw-bold" %>
+            <%= f.text_field :address, placeholder: t("pois.form.placeholders.address", default: "Ex: Alter do Chão, Santarém - PA"), class: "form-control" %>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <%= f.label :latitude, Poi.human_attribute_name(:latitude), class: "form-label text-muted small fw-bold" %>
+              <%= f.number_field :latitude, step: :any, placeholder: t("pois.form.placeholders.latitude", default: "-2.504100"), class: "form-control" %>
+            </div>
+            <div class="col-md-6 mb-3">
+              <%= f.label :longitude, Poi.human_attribute_name(:longitude), class: "form-label text-muted small fw-bold" %>
+              <%= f.number_field :longitude, step: :any, placeholder: t("pois.form.placeholders.longitude", default: "-54.954700"), class: "form-control" %>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <%= f.label :cover_image, Poi.human_attribute_name(:cover_image), class: "form-label text-muted small fw-bold" %>
+            <%= f.file_field :cover_image, class: "form-control", accept: "image/*" %>
+          </div>
+
+          <div class="mb-4">
+            <%= f.label :description, Poi.human_attribute_name(:description), class: "form-label text-muted small fw-bold" %>
+            <%= f.text_area :description, rows: 4, placeholder: t("pois.form.placeholders.description", default: "Descreva o que torna este local especial..."), class: "form-control" %>
+          </div>
+
+          <div class="d-flex justify-content-between align-items-center">
+            <%= link_to t("pois.form.cancel", default: "Cancelar"), local_assigns[:cancel_path] || pois_path, class: "text-decoration-none text-muted small fw-semibold" %>
+            <%= f.submit poi.new_record? ? t("pois.form.submit.create", default: "Salvar Ponto de Interesse") : t("pois.form.submit.update", default: "Atualizar Ponto de Interesse"), class: "btn btn-primary px-4 fw-semibold" %>
+          </div>
         <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="mb-3">
-    <%= form.label :name, class: "form-label fw-bold" %>
-    <%= form.text_field :name, class: "form-control", placeholder: t("pois.form.placeholders.name") %>
-  </div>
-
-  <div class="mb-3">
-    <%= form.label :category, class: "form-label fw-bold" %>
-    <%= form.text_field :category, class: "form-control", placeholder: t("pois.form.placeholders.category") %>
-  </div>
-
-  <div class="mb-3">
-    <%= form.label :address, class: "form-label fw-bold" %>
-    <%= form.text_field :address, class: "form-control", placeholder: t("pois.form.placeholders.address") %>
-  </div>
-
-  <div class="row">
-    <div class="col-md-6 mb-3">
-      <%= form.label :latitude, class: "form-label fw-bold" %>
-      <%= form.number_field :latitude, step: :any, class: "form-control", placeholder: t("pois.form.placeholders.latitude") %>
-    </div>
-    <div class="col-md-6 mb-3">
-      <%= form.label :longitude, class: "form-label fw-bold" %>
-      <%= form.number_field :longitude, step: :any, class: "form-control", placeholder: t("pois.form.placeholders.longitude") %>
+      </div>
     </div>
   </div>
-
-  <div class="mb-3">
-    <%= form.label :cover_image, class: "form-label fw-bold" %>
-    <%= form.file_field :cover_image, class: "form-control", accept: "image/*" %>
-  </div>
-  
-  <div class="mb-3">
-    <%= form.label :description, class: "form-label fw-bold" %>
-    <%= form.text_area :description, rows: 4, class: "form-control", placeholder: t("pois.form.placeholders.description") %>
-  </div>
-
-  <div class="d-flex justify-content-end gap-2">
-    <%= link_to t("pois.form.cancel"), pois_path, class: "btn btn-outline-secondary" %>
-    <%= form.submit class: "btn btn-primary" %>
-  </div>
-<% end %>
+</div>

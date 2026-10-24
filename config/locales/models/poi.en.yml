@@ -1,0 +1,42 @@
+en:
+  activerecord:
+    models:
+      poi:
+        one: "Point of Interest"
+        other: "Points of Interest"
+    attributes:
+      poi:
+        name: "Tourist Point Name"
+        category: "Category"
+        address: "Address"
+        latitude: "Latitude"
+        longitude: "Longitude"
+        cover_image: "Cover Image"
+        description: "Description"
+  pois:
+    index:
+      title: "Points of Interest"
+      new_button: "New Point"
+      actions:
+        show: "Show"
+        edit: "Edit"
+        destroy: "Delete"
+        confirm_destroy: "Are you sure?"
+    show:
+      about: "About the place"
+      coordinates: "Geographical Coordinates"
+      back: "Back to list"
+    form:
+      new_title: "New Point of Interest"
+      edit_title: "Edit Point of Interest"
+      placeholders:
+        name: "Ex: Alter do Chão Beach"
+        category: "Ex: Beach, Culture, Restaurant"
+        address: "Ex: Alter do Chão, Santarém - PA"
+        latitude: "-2.504100"
+        longitude: "-54.954700"
+        description: "Describe what makes this place special..."
+      submit:
+        create: "Save Point of Interest"
+        update: "Update Point of Interest"
+      cancel: "Cancel"
