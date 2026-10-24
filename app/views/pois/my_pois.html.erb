@@ -1,0 +1,53 @@
+<div class="container mx-auto px-4 py-8">
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-bold text-gray-800">Meus Pontos de Interesse</h1>
+    <%= link_to "Novo Ponto", new_poi_path, class: "bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded shadow" %>
+  </div>
+
+  <% if @pois.any? %>
+    <div class="bg-white shadow-md rounded-lg overflow-hidden">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nome</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Categoria</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+            <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Ações</th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+          <% @pois.each do |poi| %>
+            <tr>
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                <%= poi.name %>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <%= poi.category %>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm">
+                <% case poi.status.to_sym %>
+                <% when :approved %>
+                  <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Aprovado</span>
+                <% when :pending %>
+                  <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">Pendente</span>
+                <% when :rejected %>
+                  <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Rejeitado</span>
+                <% end %>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2">
+                <%= link_to "Ver", poi_path(poi), class: "text-indigo-600 hover:text-indigo-900" %>
+                <%= link_to "Editar", edit_poi_path(poi), class: "text-gray-600 hover:text-gray-900" %>
+                <%= button_to "Excluir", poi_path(poi), method: :delete, data: { turbo_confirm: "Tem certeza?" }, class: "text-red-600 hover:text-red-900 inline" %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <div class="bg-white p-6 rounded-lg shadow text-center">
+      <p class="text-gray-600 mb-4">Você ainda não cadastrou nenhum ponto de interesse.</p>
+      <%= link_to "Cadastrar Primeiro Ponto", new_poi_path, class: "bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded" %>
+    </div>
+  <% end %>
+</div>

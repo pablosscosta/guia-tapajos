@@ -1,16 +1,59 @@
-<h1>Painel Administrativo - POIs</h1>
+<div class="container mx-auto px-4 py-8">
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-bold text-gray-800">Painel Administrativo - Moderação de POIs</h1>
+    <%= link_to "Novo POI", new_admin_poi_path, class: "bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded shadow" %>
+  </div>
 
-<%= link_to "Novo POI", new_admin_poi_path, class: "btn" %>
-
-<ul>
-  <% @pois.each do |poi| %>
-    <li>
-      <strong><%= poi.name %></strong> (<%= poi.status %>)
-      
-      <% if poi.pending? %>
-        <%= button_to "Aprovar", approve_admin_poi_path(poi), method: :patch %>
-        <%= button_to "Rejeitar", reject_admin_poi_path(poi), method: :patch %>
-      <% end %>
-    </li>
+  <% if @pois.any? %>
+    <div class="bg-white shadow-md rounded-lg overflow-hidden">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nome</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Criador</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Categoria</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+            <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Ações de Moderação</th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+          <% @pois.each do |poi| %>
+            <tr>
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                <%= poi.name %>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <%= poi.user&.email || "Desconhecido" %>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <%= poi.category %>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm">
+                <% case poi.status.to_sym %>
+                <% when :approved %>
+                  <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Aprovado</span>
+                <% when :pending %>
+                  <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">Pendente</span>
+                <% when :rejected %>
+                  <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Rejeitado</span>
+                <% end %>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2 flex justify-end items-center">
+                <% if poi.pending? %>
+                  <%= button_to "Aprovar", approve_admin_poi_path(poi), method: :patch, class: "bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-xs cursor-pointer", form: { class: "inline-block" } %>
+                  <%= button_to "Rejeitar", reject_admin_poi_path(poi), method: :patch, class: "bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-xs cursor-pointer", form: { class: "inline-block" } %>
+                <% else %>
+                  <span class="text-gray-400 text-xs italic">Moderação concluída</span>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <div class="bg-white p-6 rounded-lg shadow text-center">
+      <p class="text-gray-600">Nenhum ponto de interesse cadastrado no sistema.</p>
+    </div>
   <% end %>
-</ul>
+</div>
