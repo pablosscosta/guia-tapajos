@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root "pois#index"
+  root "application#home"
   
   resources :pois, only: [:index, :show, :new, :create, :edit, :update, :destroy] do
     collection do
