@@ -1,6 +1,5 @@
 class PoisController < ApplicationController
   before_action :set_poi, only: %i[ show edit update destroy ]
-  before_action :require_login, only: %i[ my_pois new create edit update destroy ]
 
   # Listagem Pública (Home / Mapa)
   # GET /pois
