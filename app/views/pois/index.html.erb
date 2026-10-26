@@ -49,6 +49,7 @@
             <h5 class="card-title"><%= poi.name %></h5>
             <h6 class="card-subtitle mb-2 text-muted"><%= poi.category %></h6>
             <p class="card-text"><%= poi.address %></p>
+            <%= link_to "Ver detalhes", poi_path(poi), class: "btn btn-primary" %>
           </div>
         </div>
       </div>
