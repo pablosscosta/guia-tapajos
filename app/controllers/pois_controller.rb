@@ -11,7 +11,7 @@ class PoisController < ApplicationController
     end
 
     if params[:category].present?
-      @pois = @pois.where(category: params[:category])
+      @pois = @pois.joins(:categories).where(categories: { name: params[:category] }).distinct
     end
 
     if params[:latitude].present? && params[:longitude].present?

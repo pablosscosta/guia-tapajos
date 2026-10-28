@@ -12,7 +12,7 @@
 
         <div class="col-md-3">
           <%= f.label :category, "Categoria", class: "form-label fw-bold" %>
-          <%= f.select :category, options_for_select([["Todas", ""]] + Poi.pluck(:category).compact.uniq, params[:category]), {}, class: "form-select" %>
+          <%= f.select :category, options_for_select([["Todas", ""]] + Category.pluck(:name), params[:category]), {}, class: "form-select" %>
         </div>
 
         <div class="col-md-2">
@@ -38,21 +38,6 @@
     </div>
   <% end %>
 
-<div class="row">
-    <% @pois.each do |poi| %>
-      <div class="col-md-4 mb-3">
-        <div class="card h-100 shadow-sm">
-          <% if poi.cover_image.attached? %>
-            <%= image_tag poi.cover_image, class: "card-img-top", style: "height: 200px; object-fit: cover;" %>
-          <% end %>
-          <div class="card-body">
-            <h5 class="card-title"><%= poi.name %></h5>
-            <h6 class="card-subtitle mb-2 text-muted"><%= poi.category %></h6>
-            <p class="card-text"><%= poi.address %></p>
-            <%= link_to "Ver detalhes", poi_path(poi), class: "btn btn-primary" %>
-          </div>
-        </div>
-      </div>
-    <% end %>
+  <div class="row">
+    <%= render partial: "poi_card", collection: @pois, as: :poi %>
   </div>
-</div>
