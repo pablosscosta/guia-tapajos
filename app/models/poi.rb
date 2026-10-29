@@ -1,10 +1,13 @@
 class Poi < ApplicationRecord
   has_one_attached :cover_image
   belongs_to :user
+  has_many :poi_categories, dependent: :destroy
+  has_many :categories, through: :poi_categories
 
   enum status: { pending: 0, approved: 1, rejected: 2 }
 
-  validates :name, :category, :address, :latitude, :longitude, presence: true
+  validates :name, :address, :latitude, :longitude, presence: true
+  validates :categories, presence: true 
 
   before_validation :set_default_status, on: :create
 

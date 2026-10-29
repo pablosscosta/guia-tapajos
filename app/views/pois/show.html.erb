@@ -8,7 +8,9 @@
       <div class="card-body p-4">
         <div class="d-flex justify-content-between align-items-start mb-2">
           <div>
-            <span class="badge bg-secondary mb-2"><%= @poi.category %></span>
+            <% @poi.categories.each do |category| %>
+              <span class="badge bg-secondary me-1"><%= category.name %></span>
+            <% end %>
             <h1 class="h3 mb-1"><%= @poi.name %></h1>
             <p class="text-muted small"><%= @poi.address %></p>
           </div>

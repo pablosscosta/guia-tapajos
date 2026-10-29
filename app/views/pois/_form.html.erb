@@ -22,9 +22,14 @@
             <%= f.text_field :name, placeholder: t("pois.form.placeholders.name", default: "Ex: Praia de Alter do Chão"), class: "form-control" %>
           </div>
 
-          <div class="mb-3">
-            <%= f.label :category, Poi.human_attribute_name(:category), class: "form-label text-muted small fw-bold" %>
-            <%= f.text_field :category, placeholder: t("pois.form.placeholders.category", default: "Ex: Praia, Cultura, Restaurante"), class: "form-control" %>
+          <div class="field">
+            <%= f.label :category_ids, "Categorias" %><br>
+            <%= f.collection_check_boxes :category_ids, Category.all, :id, :name do |b| %>
+              <div class="checkbox-item">
+                <%= b.check_box %>
+                <%= b.label %>
+              </div>
+            <% end %>
           </div>
 
           <div class="mb-3">

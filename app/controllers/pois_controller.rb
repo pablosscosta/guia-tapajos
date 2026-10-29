@@ -11,7 +11,7 @@ class PoisController < ApplicationController
     end
 
     if params[:category].present?
-      @pois = @pois.where(category: params[:category])
+      @pois = @pois.joins(:categories).where(categories: { name: params[:category] }).distinct
     end
 
     if params[:latitude].present? && params[:longitude].present?
@@ -87,6 +87,6 @@ class PoisController < ApplicationController
   end
 
   def poi_params
-    params.require(:poi).permit(:name, :description, :category, :address, :latitude, :longitude, :cover_image)
+    params.require(:poi).permit(:name, :description, :address, :latitude, :longitude, :cover_image, category_ids: [])
   end
 end
