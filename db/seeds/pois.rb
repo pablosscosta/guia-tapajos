@@ -10,7 +10,7 @@ pois_data = [
   {
     name: "Praia de Alter do Chão",
     description: "Conhecida como o Caribe Amazônico, famosa por suas águas cristalinas e a Ilha do Amor.",
-    category: "Praia",
+    categories: ["Praia", "Passeio", "Natureza"],
     address: "Alter do Chão, Santarém - PA",
     latitude: -2.504100,
     longitude: -54.954700,
@@ -20,7 +20,7 @@ pois_data = [
   {
     name: "Centro Cultural João Fona",
     description: "Espaço cultural e museu com acervo histórico e arqueológico da cerâmica tapajônica em Santarém.",
-    category: "Cultura",
+    categories: ["Cultura", "História"],
     address: "Praça Barão de Santarém, Centro, Santarém - PA",
     latitude: -2.418200,
     longitude: -54.708300,
@@ -30,7 +30,7 @@ pois_data = [
   {
     name: "Orla de Santarém",
     description: "Calçadão à margem do Rio Tapajós, ideal para caminhadas e contemplação do encontro das águas.",
-    category: "Passeio",
+    categories: ["Passeio"],
     address: "Av. Tapajós, Centro, Santarém - PA",
     latitude: -2.438900,
     longitude: -54.701100,
@@ -40,13 +40,14 @@ pois_data = [
 ]
 
 pois_data.each do |poi_attrs|
-  # Busca a categoria correspondente cadastrada no banco
-  category = Category.find_by(name: poi_attrs[:category])
+  # Garante que seja um array e busca os IDs correspondentes no banco
+  category_names = Array(poi_attrs[:categories])
+  category_records = Category.where(name: category_names)
 
   poi = Poi.create!(
     name: poi_attrs[:name],
     description: poi_attrs[:description],
-    category_ids: category ? [category.id] : [], # Associa via category_ids
+    category_ids: category_records.pluck(:id), # Atribui múltiplos IDs
     address: poi_attrs[:address],
     latitude: poi_attrs[:latitude],
     longitude: poi_attrs[:longitude],
