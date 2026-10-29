@@ -6,7 +6,8 @@ class Poi < ApplicationRecord
 
   enum status: { pending: 0, approved: 1, rejected: 2 }
 
-  validates :name, :category, :address, :latitude, :longitude, presence: true
+  validates :name, :address, :latitude, :longitude, presence: true
+  validates :categories, presence: true 
 
   before_validation :set_default_status, on: :create
 

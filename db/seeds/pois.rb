@@ -40,10 +40,13 @@ pois_data = [
 ]
 
 pois_data.each do |poi_attrs|
+  # Busca a categoria correspondente cadastrada no banco
+  category = Category.find_by(name: poi_attrs[:category])
+
   poi = Poi.create!(
     name: poi_attrs[:name],
     description: poi_attrs[:description],
-    category: poi_attrs[:category],
+    category_ids: category ? [category.id] : [], # Associa via category_ids
     address: poi_attrs[:address],
     latitude: poi_attrs[:latitude],
     longitude: poi_attrs[:longitude],
