@@ -32,9 +32,9 @@
     </div>
   </div>
 
-  <% if params[:latitude].present? && params[:longitude].present? %>
+  <% if params[:latitude].present? && params[:longitude].present? && params[:radius].present? %>
     <div class="alert alert-info py-2">
-      <small>Filtrando por proximidade (Raio: <%= params[:radius].presence || 20 %> km)</small>
+      <small>Filtrando por proximidade (Raio: <%= params[:radius] %> km)</small>
     </div>
   <% end %>
 

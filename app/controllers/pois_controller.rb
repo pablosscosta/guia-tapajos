@@ -14,9 +14,8 @@ class PoisController < ApplicationController
       @pois = @pois.joins(:categories).where(categories: { name: params[:category] }).distinct
     end
 
-    if params[:latitude].present? && params[:longitude].present?
-      radius = params[:radius].present? ? params[:radius].to_f : 20
-      @pois = @pois.near_location(params[:latitude], params[:longitude], radius)
+    if params[:latitude].present? && params[:longitude].present? && params[:radius].present?
+      @pois = @pois.near_location(params[:latitude], params[:longitude], params[:radius].to_f)
     end
   end
 
